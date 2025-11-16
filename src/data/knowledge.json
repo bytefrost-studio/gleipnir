@@ -1,0 +1,704 @@
+{
+  "microservicios": {
+    "conceptos": [
+      {
+        "titulo": "Arquitectura de Microservicios",
+        "texto": "Estilo arquitectónico que estructura una aplicación como una colección de servicios pequeños, autónomos y débilmente acoplados. Cada servicio es responsable de una única capacidad de negocio y puede ser desarrollado, desplegado y escalado de forma independiente."
+      },
+      {
+        "titulo": "API Gateway",
+        "texto": "Punto de entrada único para todas las solicitudes de clientes hacia los microservicios. Maneja enrutamiento, composición, autenticación, rate limiting y transformación de protocolos. Ejemplos: Kong, AWS API Gateway, Netflix Zuul."
+      },
+      {
+        "titulo": "Service Discovery",
+        "texto": "Mecanismo que permite a los servicios encontrarse entre sí dinámicamente sin necesidad de configuración estática. Implementaciones comunes: Consul, Eureka, Kubernetes DNS."
+      },
+      {
+        "titulo": "Circuit Breaker Pattern",
+        "texto": "Patrón de resiliencia que previene fallos en cascada. Cuando un servicio falla repetidamente, el circuit breaker abre y redirige las solicitudes a un fallback."
+      },
+      {
+        "titulo": "Event-Driven Architecture",
+        "texto": "Patrón donde los servicios se comunican mediante eventos asíncronos. Promueve bajo acoplamiento y alta escalabilidad. Se implementa con message brokers como Kafka o RabbitMQ."
+      }
+    ],
+    "preguntas": [
+      {
+        "pregunta": "¿Cuál es la principal ventaja de la arquitectura de microservicios sobre monolitos?",
+        "opciones": [
+          "Menor complejidad operacional",
+          "Despliegue y escalado independiente de servicios",
+          "Menor latencia en comunicación",
+          "Requiere menos infraestructura"
+        ],
+        "respuesta": 1
+      },
+      {
+        "pregunta": "¿Qué patrón se utiliza para prevenir fallos en cascada entre microservicios?",
+        "opciones": [
+          "Singleton Pattern",
+          "Factory Pattern",
+          "Circuit Breaker Pattern",
+          "Observer Pattern"
+        ],
+        "respuesta": 2
+      },
+      {
+        "pregunta": "¿Cuál es la función principal de un API Gateway?",
+        "opciones": [
+          "Almacenar datos en caché",
+          "Punto de entrada único para solicitudes de clientes",
+          "Gestionar bases de datos",
+          "Compilar código fuente"
+        ],
+        "respuesta": 1
+      },
+      {
+        "pregunta": "¿Qué tecnología NO es un message broker?",
+        "opciones": [
+          "Apache Kafka",
+          "RabbitMQ",
+          "Redis Pub/Sub",
+          "PostgreSQL"
+        ],
+        "respuesta": 3
+      }
+    ]
+  },
+  "aws": {
+    "conceptos": [
+      {
+        "titulo": "EC2 (Elastic Compute Cloud)",
+        "texto": "Servicio de cómputo escalable que proporciona capacidad de procesamiento en la nube. Permite lanzar instancias virtuales con diferentes tipos de hardware."
+      },
+      {
+        "titulo": "S3 (Simple Storage Service)",
+        "texto": "Servicio de almacenamiento de objetos altamente escalable y duradero. Ofrece 99.999999999% de durabilidad. Clases: Standard, Intelligent-Tiering, Glacier."
+      },
+      {
+        "titulo": "Lambda",
+        "texto": "Servicio serverless que ejecuta código en respuesta a eventos sin necesidad de provisionar servidores. Se cobra por tiempo de ejecución y memoria utilizada."
+      },
+      {
+        "titulo": "DynamoDB",
+        "texto": "Base de datos NoSQL completamente administrada, de alto rendimiento. Ofrece latencia de milisegundos de un solo dígito. Soporta modelos clave-valor y documentos."
+      },
+      {
+        "titulo": "EKS (Elastic Kubernetes Service)",
+        "texto": "Servicio administrado que facilita la ejecución de Kubernetes en AWS. Elimina la necesidad de instalar y operar el plano de control de Kubernetes."
+      }
+    ],
+    "preguntas": [
+      {
+        "pregunta": "¿Qué servicio AWS es ideal para ejecutar código sin gestionar servidores?",
+        "opciones": [
+          "EC2",
+          "Lambda",
+          "ECS",
+          "Lightsail"
+        ],
+        "respuesta": 1
+      },
+      {
+        "pregunta": "¿Cuál es la durabilidad de Amazon S3?",
+        "opciones": [
+          "99.9%",
+          "99.99%",
+          "99.999999999%",
+          "100%"
+        ],
+        "respuesta": 2
+      },
+      {
+        "pregunta": "¿Qué tipo de base de datos es DynamoDB?",
+        "opciones": [
+          "Relacional",
+          "Grafos",
+          "NoSQL",
+          "Time-series"
+        ],
+        "respuesta": 2
+      },
+      {
+        "pregunta": "¿Qué servicio AWS administra Kubernetes?",
+        "opciones": [
+          "ECS",
+          "Fargate",
+          "EKS",
+          "Beanstalk"
+        ],
+        "respuesta": 2
+      }
+    ]
+  },
+  "typescript": {
+    "conceptos": [
+      {
+        "titulo": "Tipos Estáticos",
+        "texto": "TypeScript añade tipado estático opcional a JavaScript. Permite detectar errores en tiempo de compilación. Tipos básicos: string, number, boolean, array, tuple, enum, any, void."
+      },
+      {
+        "titulo": "Interfaces",
+        "texto": "Definen la estructura de un objeto, especificando qué propiedades y métodos debe tener. Son extensibles y pueden ser implementadas por clases."
+      },
+      {
+        "titulo": "Generics",
+        "texto": "Permiten crear componentes reutilizables que trabajan con múltiples tipos. Proporcionan type safety sin sacrificar flexibilidad."
+      },
+      {
+        "titulo": "Type Guards",
+        "texto": "Técnicas para narrowing de tipos en runtime. Incluyen: typeof, instanceof, in operator. Permiten que TypeScript infiera tipos más específicos."
+      },
+      {
+        "titulo": "Decorators",
+        "texto": "Metaprogramación que permite añadir anotaciones y modificar clases. Usados extensivamente en NestJS y Angular."
+      }
+    ],
+    "preguntas": [
+      {
+        "pregunta": "¿Cuál es la principal ventaja de TypeScript sobre JavaScript?",
+        "opciones": [
+          "Es más rápido en runtime",
+          "Tipado estático y detección de errores en compilación",
+          "Usa menos memoria",
+          "No requiere transpilación"
+        ],
+        "respuesta": 1
+      },
+      {
+        "pregunta": "¿Qué permite crear componentes reutilizables con múltiples tipos?",
+        "opciones": [
+          "Interfaces",
+          "Enums",
+          "Generics",
+          "Tuples"
+        ],
+        "respuesta": 2
+      },
+      {
+        "pregunta": "¿Qué son los Type Guards en TypeScript?",
+        "opciones": [
+          "Funciones de seguridad",
+          "Técnicas para narrowing de tipos en runtime",
+          "Validadores de esquemas",
+          "Protectores de memoria"
+        ],
+        "respuesta": 1
+      },
+      {
+        "pregunta": "¿En qué frameworks se usan extensivamente los Decorators?",
+        "opciones": [
+          "React y Vue",
+          "Express y Koa",
+          "NestJS y Angular",
+          "Next.js y Nuxt"
+        ],
+        "respuesta": 2
+      }
+    ]
+  },
+  "kubernetes": {
+    "conceptos": [
+      {
+        "titulo": "Pod",
+        "texto": "Unidad mas pequena desplegable en Kubernetes. Contenedores compartiendo almacenamiento y red."
+      },
+      {
+        "titulo": "Deployment",
+        "texto": "Gestiona estado deseado de Pods. Rolling updates y rollback. Define replicas."
+      },
+      {
+        "titulo": "Service",
+        "texto": "Conjunto logico de Pods. ClusterIP (interno), NodePort (nodos), LoadBalancer (externo)."
+      },
+      {
+        "titulo": "ConfigMap y Secrets",
+        "texto": "ConfigMap guarda config no confidencial. Secrets almacena passwords cifrados."
+      },
+      {
+        "titulo": "Ingress",
+        "texto": "Acceso externo HTTP/HTTPS. Balanceo, SSL, virtual hosting. Requiere Ingress Controller."
+      },
+      {
+        "titulo": "Namespaces",
+        "texto": "Aislan recursos en cluster. Separan ambientes dev/staging/prod."
+      },
+      {
+        "titulo": "HPA",
+        "texto": "Horizontal Pod Autoscaler. Escala Pods segun CPU/memoria automaticamente."
+      }
+    ],
+    "preguntas": [
+      {
+        "pregunta": "Unidad mas pequena desplegable en K8s?",
+        "opciones": [
+          "Container",
+          "Pod",
+          "Deployment",
+          "Service"
+        ],
+        "respuesta": 1
+      },
+      {
+        "pregunta": "Objeto que permite rolling updates?",
+        "opciones": [
+          "Pod",
+          "Service",
+          "Deployment",
+          "ConfigMap"
+        ],
+        "respuesta": 2
+      },
+      {
+        "pregunta": "Service que expone puerto en cada nodo?",
+        "opciones": [
+          "ClusterIP",
+          "NodePort",
+          "LoadBalancer",
+          "ExternalName"
+        ],
+        "respuesta": 1
+      },
+      {
+        "pregunta": "Donde se guarda info sensible?",
+        "opciones": [
+          "ConfigMap",
+          "Secrets",
+          "Pod",
+          "Volume"
+        ],
+        "respuesta": 1
+      },
+      {
+        "pregunta": "Componente que escala Pods?",
+        "opciones": [
+          "Deployment",
+          "Service",
+          "HPA",
+          "Ingress"
+        ],
+        "respuesta": 2
+      },
+      {
+        "pregunta": "Para que sirven Namespaces?",
+        "opciones": [
+          "Almacenar datos",
+          "Aislar recursos",
+          "Gestionar redes",
+          "Compilar"
+        ],
+        "respuesta": 1
+      }
+    ]
+  },
+  "nestjs": {
+    "conceptos": [
+      {
+        "titulo": "Modulos",
+        "texto": "Bloques que organizan codigo. Encapsulan providers, controllers, imports."
+      },
+      {
+        "titulo": "Controllers",
+        "texto": "Manejan HTTP requests. Decoradores @Get(), @Post(), @Delete() definen rutas."
+      },
+      {
+        "titulo": "Providers",
+        "texto": "Services son providers. @Injectable() marca clase. Inyeccion de dependencias."
+      },
+      {
+        "titulo": "Pipes",
+        "texto": "Transforman y validan datos. ValidationPipe valida DTOs automaticamente."
+      },
+      {
+        "titulo": "Guards",
+        "texto": "Auth y autorizacion. Implementan CanActivate. Deciden si procesar request."
+      },
+      {
+        "titulo": "Interceptors",
+        "texto": "Transforman resultados. Logging, caching, modificar respuestas."
+      },
+      {
+        "titulo": "Middleware",
+        "texto": "Se ejecuta antes del handler. Acceso a req/res. Logging, validacion headers."
+      }
+    ],
+    "preguntas": [
+      {
+        "pregunta": "Decorador que marca clase inyectable?",
+        "opciones": [
+          "@Module()",
+          "@Controller()",
+          "@Injectable()",
+          "@Service()"
+        ],
+        "respuesta": 2
+      },
+      {
+        "pregunta": "Componente que maneja HTTP requests?",
+        "opciones": [
+          "Module",
+          "Provider",
+          "Controller",
+          "Pipe"
+        ],
+        "respuesta": 2
+      },
+      {
+        "pregunta": "Para que sirven Pipes?",
+        "opciones": [
+          "Auth",
+          "Logging",
+          "Validacion de datos",
+          "Errores"
+        ],
+        "respuesta": 2
+      },
+      {
+        "pregunta": "Interface que implementan Guards?",
+        "opciones": [
+          "CanHandle",
+          "CanActivate",
+          "CanAuth",
+          "CanValidate"
+        ],
+        "respuesta": 1
+      },
+      {
+        "pregunta": "Proposito de Interceptors?",
+        "opciones": [
+          "Rutas",
+          "Transformar resultados",
+          "Modulos",
+          "DB"
+        ],
+        "respuesta": 1
+      },
+      {
+        "pregunta": "Que se ejecuta primero en request?",
+        "opciones": [
+          "Guard",
+          "Interceptor",
+          "Middleware",
+          "Pipe"
+        ],
+        "respuesta": 2
+      }
+    ]
+  },
+  "solid": {
+    "conceptos": [
+      {
+        "titulo": "Single Responsibility (SRP)",
+        "texto": "Clase con una unica razon para cambiar. Una sola responsabilidad."
+      },
+      {
+        "titulo": "Open/Closed (OCP)",
+        "texto": "Abierto para extension, cerrado para modificacion. Usar abstracciones."
+      },
+      {
+        "titulo": "Liskov Substitution (LSP)",
+        "texto": "Subclases sustituyen clase base sin alterar comportamiento."
+      },
+      {
+        "titulo": "Interface Segregation (ISP)",
+        "texto": "No depender de interfaces no usadas. Interfaces especificas mejor que generales."
+      },
+      {
+        "titulo": "Dependency Inversion (DIP)",
+        "texto": "Depender de abstracciones, no implementaciones concretas."
+      }
+    ],
+    "preguntas": [
+      {
+        "pregunta": "Principio de una unica razon para cambiar?",
+        "opciones": [
+          "OCP",
+          "SRP",
+          "DIP",
+          "ISP"
+        ],
+        "respuesta": 1
+      },
+      {
+        "pregunta": "Principio de extender sin modificar?",
+        "opciones": [
+          "SRP",
+          "OCP",
+          "LSP",
+          "ISP"
+        ],
+        "respuesta": 1
+      },
+      {
+        "pregunta": "Principio de sustitucion de subclases?",
+        "opciones": [
+          "SRP",
+          "ISP",
+          "LSP",
+          "DIP"
+        ],
+        "respuesta": 2
+      },
+      {
+        "pregunta": "Principio de depender de abstracciones?",
+        "opciones": [
+          "SRP",
+          "OCP",
+          "LSP",
+          "DIP"
+        ],
+        "respuesta": 3
+      },
+      {
+        "pregunta": "Principio de no depender de interfaces no usadas?",
+        "opciones": [
+          "SRP",
+          "OCP",
+          "ISP",
+          "DIP"
+        ],
+        "respuesta": 2
+      }
+    ]
+  },
+  "graphql": {
+    "conceptos": [
+      {
+        "titulo": "Schema y Types",
+        "texto": "Schema tipado. Tipos: Int, Float, String, Boolean, ID. Contrato cliente-servidor."
+      },
+      {
+        "titulo": "Queries",
+        "texto": "Operaciones de lectura. Cliente pide campos exactos. Evita over/under-fetching."
+      },
+      {
+        "titulo": "Mutations",
+        "texto": "Modifican datos: crear, actualizar, eliminar. Devuelven datos modificados."
+      },
+      {
+        "titulo": "Resolvers",
+        "texto": "Funciones que resuelven valores. Params: parent, args, context, info."
+      },
+      {
+        "titulo": "Subscriptions",
+        "texto": "Tiempo real via WebSockets. Notificaciones, chat, updates live."
+      },
+      {
+        "titulo": "Fragments",
+        "texto": "Campos reutilizables en queries. Evitan repeticion. Mejoran mantenibilidad."
+      }
+    ],
+    "preguntas": [
+      {
+        "pregunta": "Problema de REST que GraphQL soluciona?",
+        "opciones": [
+          "Auth",
+          "Over/under-fetching",
+          "Caching",
+          "Versionado"
+        ],
+        "respuesta": 1
+      },
+      {
+        "pregunta": "Operacion que modifica datos?",
+        "opciones": [
+          "Query",
+          "Mutation",
+          "Subscription",
+          "Resolver"
+        ],
+        "respuesta": 1
+      },
+      {
+        "pregunta": "Que resuelve valores de campos?",
+        "opciones": [
+          "Schema",
+          "Type",
+          "Resolver",
+          "Query"
+        ],
+        "respuesta": 2
+      },
+      {
+        "pregunta": "Operacion de tiempo real?",
+        "opciones": [
+          "Query",
+          "Mutation",
+          "Subscription",
+          "Resolver"
+        ],
+        "respuesta": 2
+      },
+      {
+        "pregunta": "Que son Fragments?",
+        "opciones": [
+          "Tipos",
+          "Campos reutilizables",
+          "Auth",
+          "Errores"
+        ],
+        "respuesta": 1
+      }
+    ]
+  },
+  "cicd": {
+    "conceptos": [
+      {
+        "titulo": "Continuous Integration",
+        "texto": "Integrar cambios frecuentemente. Build y tests automatizados. Detectar errores rapido."
+      },
+      {
+        "titulo": "Continuous Delivery",
+        "texto": "Codigo siempre desplegable. Automatiza release. Aprobacion manual para prod."
+      },
+      {
+        "titulo": "Continuous Deployment",
+        "texto": "Automatizacion completa hasta produccion. Todo cambio que pasa tests se despliega."
+      },
+      {
+        "titulo": "Pipeline",
+        "texto": "Pasos automatizados: build, test, analyze, deploy. Jenkins, GitHub Actions, GitLab CI."
+      },
+      {
+        "titulo": "Infrastructure as Code",
+        "texto": "Infra via archivos config. Terraform, CloudFormation. Versionado y reproducible."
+      },
+      {
+        "titulo": "Blue-Green Deployment",
+        "texto": "Dos ambientes identicos. Redirige trafico. Rollback instantaneo."
+      }
+    ],
+    "preguntas": [
+      {
+        "pregunta": "Objetivo de Continuous Integration?",
+        "opciones": [
+          "Deploy a prod",
+          "Integrar y detectar errores",
+          "Gestionar infra",
+          "Monitorear"
+        ],
+        "respuesta": 1
+      },
+      {
+        "pregunta": "Diferencia entre Delivery y Deployment?",
+        "opciones": [
+          "No tests",
+          "Deployment automatico hasta prod",
+          "Delivery mas rapido",
+          "Sin diferencia"
+        ],
+        "respuesta": 1
+      },
+      {
+        "pregunta": "Herramienta NO de CI/CD?",
+        "opciones": [
+          "Jenkins",
+          "GitHub Actions",
+          "Terraform",
+          "GitLab CI"
+        ],
+        "respuesta": 2
+      },
+      {
+        "pregunta": "Estrategia con rollback instantaneo?",
+        "opciones": [
+          "Rolling",
+          "Blue-Green",
+          "Canary",
+          "Recreate"
+        ],
+        "respuesta": 1
+      },
+      {
+        "pregunta": "Que es IaC?",
+        "opciones": [
+          "Codigo cloud",
+          "Infra via config files",
+          "APIs",
+          "Testing"
+        ],
+        "respuesta": 1
+      }
+    ]
+  },
+  "cleancode": {
+    "conceptos": [
+      {
+        "titulo": "Nombres Significativos",
+        "texto": "Revelan intencion. Evitar abreviaciones. Codigo auto-documentado."
+      },
+      {
+        "titulo": "Funciones Pequenas",
+        "texto": "Una sola cosa. Menos de 20 lineas ideal. Dividir si necesita comentarios."
+      },
+      {
+        "titulo": "DRY (Do Not Repeat)",
+        "texto": "Evitar duplicacion de codigo. Una representacion unica de conocimiento."
+      },
+      {
+        "titulo": "KISS",
+        "texto": "Keep It Simple. Evitar complejidad innecesaria. Lo simple funciona mejor."
+      },
+      {
+        "titulo": "Comentarios Utiles",
+        "texto": "Comentar el por que, no el que. Evitar comentarios obvios o desactualizados."
+      },
+      {
+        "titulo": "Manejo de Errores",
+        "texto": "Excepciones, no codigos de error. Contexto en mensajes. No ignorar excepciones."
+      }
+    ],
+    "preguntas": [
+      {
+        "pregunta": "Que deben revelar nombres de variables?",
+        "opciones": [
+          "Tipo",
+          "Intencion",
+          "Autor",
+          "Fecha"
+        ],
+        "respuesta": 1
+      },
+      {
+        "pregunta": "Longitud ideal de funcion?",
+        "opciones": [
+          "100+ lineas",
+          "50-100",
+          "Menos de 20",
+          "No importa"
+        ],
+        "respuesta": 2
+      },
+      {
+        "pregunta": "Que significa DRY?",
+        "opciones": [
+          "Dev Rapido",
+          "No Repetir Codigo",
+          "Disenar Respuestas",
+          "Documentar"
+        ],
+        "respuesta": 1
+      },
+      {
+        "pregunta": "Comentarios a evitar?",
+        "opciones": [
+          "APIs",
+          "Obvios/desactualizados",
+          "Arquitectura",
+          "Todos"
+        ],
+        "respuesta": 1
+      },
+      {
+        "pregunta": "Mejor solucion segun KISS?",
+        "opciones": [
+          "Compleja",
+          "Rapida",
+          "Simple que funciona",
+          "Con patrones"
+        ],
+        "respuesta": 2
+      }
+    ]
+  }
+}

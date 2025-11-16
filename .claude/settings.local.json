@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir:*)",
+      "Bash(rm:*)",
+      "Bash(update_knowledge.js)",
+      "Bash(mv:*)",
+      "Bash(node update_knowledge.cjs:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

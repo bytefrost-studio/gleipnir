@@ -62,27 +62,30 @@ export default function Tarjetas() {
 
         <div
           onClick={toggleAnswer}
-          className="card min-h-[300px] flex items-center justify-center cursor-pointer transform transition-all duration-500 hover:shadow-xl"
+          className="flip-card min-h-[300px] cursor-pointer"
         >
-          {!showAnswer ? (
-            <div className="text-center">
-              <div className="text-4xl mb-4">🎴</div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-4">
-                {currentConcept.titulo}
-              </h3>
-              <p className="text-gray-500 text-sm">Haz clic para ver la respuesta</p>
+          <div className={`flip-card-inner ${showAnswer ? 'flipped' : ''}`}>
+            <div className="flip-card-front card min-h-[300px] flex items-center justify-center hover:shadow-xl">
+              <div className="text-center">
+                <div className="text-4xl mb-4">🎴</div>
+                <h3 className="text-2xl font-bold text-gray-800 mb-4">
+                  {currentConcept.titulo}
+                </h3>
+                <p className="text-gray-500 text-sm">Haz clic para ver la respuesta</p>
+              </div>
             </div>
-          ) : (
-            <div className="text-center">
-              <div className="text-4xl mb-4">💡</div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-4">
-                {currentConcept.titulo}
-              </h3>
-              <p className="text-gray-700 leading-relaxed">
-                {currentConcept.texto}
-              </p>
+            <div className="flip-card-back card min-h-[300px] flex items-center justify-center hover:shadow-xl">
+              <div className="text-center px-4">
+                <div className="text-4xl mb-4">💡</div>
+                <h3 className="text-xl font-semibold text-gray-800 mb-4">
+                  {currentConcept.titulo}
+                </h3>
+                <p className="text-gray-700 leading-relaxed">
+                  {currentConcept.texto}
+                </p>
+              </div>
             </div>
-          )}
+          </div>
         </div>
 
         <div className="mt-8 flex justify-center gap-4">

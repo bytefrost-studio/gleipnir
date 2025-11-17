@@ -1,16 +1,171 @@
-# React + Vite
+# StudyVerse
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Plataforma de aprendizaje interactivo para desarrolladores enfocada en arquitectura de software, cloud computing y mejores prácticas de desarrollo.
 
-Currently, two official plugins are available:
+## Descripción
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+StudyVerse es una aplicación web educativa que ofrece tres modos de estudio para dominar conceptos técnicos avanzados:
 
-## React Compiler
+- **Modo Estudio**: Lectura detallada de conceptos con resaltado de palabras clave
+- **Tarjetas (Flashcards)**: Práctica con tarjetas interactivas con efecto flip
+- **Quiz**: Preguntas de opción múltiple con sistema de puntuación
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Temas Disponibles
 
-## Expanding the ESLint configuration
+| Tema | Conceptos | Preguntas | Nivel |
+|------|-----------|-----------|-------|
+| **Microservicios** | 15 | 12 | Avanzado |
+| **Serverless AWS** | 15 | 15 | Avanzado |
+| **AWS Cloud** | 5 | 4 | Intermedio |
+| **Kubernetes** | 7 | 6 | Intermedio |
+| **TypeScript** | 5 | 4 | Intermedio |
+| **NestJS** | 7 | 6 | Intermedio |
+| **GraphQL** | 6 | 5 | Intermedio |
+| **SOLID** | 5 | 5 | Intermedio |
+| **CI/CD** | 6 | 5 | Intermedio |
+| **Clean Code** | 6 | 5 | Intermedio |
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Contenido Destacado
+
+**Microservicios (Nivel Avanzado)**
+- Saga Pattern (Choreography vs Orchestration)
+- CQRS y Event Sourcing
+- Service Mesh (Istio, Envoy)
+- Distributed Tracing (OpenTelemetry)
+- Strangler Fig Pattern
+- Bulkhead y Circuit Breaker
+- Observability (SLIs, SLOs, SLAs)
+
+**Serverless AWS (Nivel Avanzado)**
+- AWS Lambda: cold starts, Provisioned Concurrency, Layers
+- API Gateway: REST vs HTTP APIs
+- Step Functions: orquestación de workflows
+- EventBridge: arquitecturas event-driven
+- DynamoDB: single-table design, Streams, DAX
+- Seguridad: IAM, Secrets Manager, OWASP Serverless
+- IaC: AWS SAM, CDK, Serverless Framework
+
+## Tecnologías
+
+- **Frontend**: React 19
+- **Build Tool**: Vite 7
+- **Styling**: Tailwind CSS 3
+- **State Management**: React Context API + useReducer
+- **Linting**: ESLint 9
+
+## Requisitos
+
+- Node.js 18+
+- npm 9+
+
+## Instalación
+
+```bash
+# Clonar repositorio
+git clone <repository-url>
+cd estudianding
+
+# Instalar dependencias
+npm install
+```
+
+## Comandos
+
+### Desarrollo
+```bash
+npm run dev
+```
+Inicia el servidor de desarrollo en `http://localhost:5173`
+
+### Build de Producción
+```bash
+npm run build
+```
+Genera los archivos optimizados en la carpeta `dist/`
+
+### Preview de Producción
+```bash
+npm run preview
+```
+Previsualiza el build de producción localmente
+
+### Linting
+```bash
+npm run lint
+```
+Ejecuta ESLint para verificar calidad del código
+
+## Estructura del Proyecto
+
+```
+src/
+├── components/          # Componentes React
+│   ├── Home.jsx         # Selector de temas y modos
+│   ├── ModoEstudio.jsx  # Lectura de conceptos
+│   ├── Tarjetas.jsx     # Flashcards interactivas
+│   ├── Preguntas.jsx    # Quiz de evaluación
+│   └── ErrorBoundary.jsx
+├── context/
+│   └── StudyContext.jsx # Estado global de la app
+├── data/
+│   └── knowledge.json   # Base de conocimientos
+├── App.jsx              # Router principal
+├── main.jsx             # Entry point
+└── index.css            # Estilos Tailwind
+```
+
+## Características
+
+- Sistema de progreso por tema
+- Puntuación gamificada
+- Tarjetas con efecto flip 3D
+- Resaltado automático de keywords
+- Diseño responsive
+- Paleta de colores personalizada
+
+## Agregar Nuevo Contenido
+
+1. Editar `src/data/knowledge.json`:
+```json
+{
+  "nuevo_tema": {
+    "conceptos": [
+      {
+        "titulo": "Concepto 1",
+        "texto": "Descripción detallada..."
+      }
+    ],
+    "preguntas": [
+      {
+        "pregunta": "¿Pregunta?",
+        "opciones": ["A", "B", "C", "D"],
+        "respuesta": 0
+      }
+    ]
+  }
+}
+```
+
+2. Agregar display name en `src/components/Home.jsx`:
+```javascript
+const names = {
+  // ...existentes
+  nuevo_tema: 'Nombre Display',
+}
+```
+
+3. Agregar summary en `src/components/ModoEstudio.jsx`:
+```javascript
+const summaries = {
+  // ...existentes
+  nuevo_tema: {
+    title: 'Nombre Display',
+    description: 'Descripción del tema...',
+    icon: '📚'
+  }
+}
+```
+
+## Licencia
+
+MIT

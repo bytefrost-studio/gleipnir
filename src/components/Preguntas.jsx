@@ -8,7 +8,6 @@ export default function Preguntas() {
   const [answered, setAnswered] = useState(false)
   const [quizCorrectAnswers, setQuizCorrectAnswers] = useState(0)
   const [quizScore, setQuizScore] = useState(0)
-  const [quizCompleted, setQuizCompleted] = useState(false)
 
   if (!currentTopic) {
     return <div>No hay tema seleccionado</div>

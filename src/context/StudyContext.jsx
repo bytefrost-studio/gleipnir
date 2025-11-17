@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useReducer } from 'react'
 import knowledgeData from '../data/knowledge.json'
 
@@ -35,7 +36,7 @@ function studyReducer(state, action) {
         currentQuestionIndex: 0,
         showAnswer: false,
       }
-    case 'NEXT_CARD':
+    case 'NEXT_CARD': {
       const topicData = state.knowledgeBase[state.currentTopic]
       const maxCards = topicData ? topicData.conceptos.length : 0
       return {
@@ -43,6 +44,7 @@ function studyReducer(state, action) {
         currentCardIndex: Math.min(state.currentCardIndex + 1, maxCards - 1),
         showAnswer: false,
       }
+    }
     case 'PREV_CARD':
       return {
         ...state,
@@ -54,7 +56,7 @@ function studyReducer(state, action) {
         ...state,
         showAnswer: !state.showAnswer,
       }
-    case 'ANSWER_QUESTION':
+    case 'ANSWER_QUESTION': {
       const isCorrect = action.payload.isCorrect
       const newScore = isCorrect ? state.score + 10 : state.score
       const newCorrect = isCorrect ? state.correctAnswers + 1 : state.correctAnswers
@@ -64,13 +66,15 @@ function studyReducer(state, action) {
         totalQuestions: state.totalQuestions + 1,
         correctAnswers: newCorrect,
       }
-    case 'NEXT_QUESTION':
+    }
+    case 'NEXT_QUESTION': {
       const questionsData = state.knowledgeBase[state.currentTopic]
       const maxQuestions = questionsData ? questionsData.preguntas.length : 0
       return {
         ...state,
         currentQuestionIndex: Math.min(state.currentQuestionIndex + 1, maxQuestions - 1),
       }
+    }
     case 'RESET_SESSION':
       return {
         ...state,
@@ -88,7 +92,7 @@ function studyReducer(state, action) {
           [action.payload.topic]: action.payload.progress,
         },
       }
-    case 'MARK_CARD_KNOWN':
+    case 'MARK_CARD_KNOWN': {
       const topic = state.currentTopic
       const currentProgress = state.topicProgress[topic] || { known: 0, total: 0 }
       return {
@@ -101,7 +105,8 @@ function studyReducer(state, action) {
           },
         },
       }
-    case 'UPDATE_QUIZ_PROGRESS':
+    }
+    case 'UPDATE_QUIZ_PROGRESS': {
       const quizTopic = action.payload.topic
       const quizCorrect = action.payload.correct
       const quizTotal = action.payload.total
@@ -117,6 +122,7 @@ function studyReducer(state, action) {
           },
         },
       }
+    }
     default:
       return state
   }

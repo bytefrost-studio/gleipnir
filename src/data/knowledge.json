@@ -3,23 +3,63 @@
     "conceptos": [
       {
         "titulo": "Arquitectura de Microservicios",
-        "texto": "Estilo arquitectónico que estructura una aplicación como una colección de servicios pequeños, autónomos y débilmente acoplados. Cada servicio es responsable de una única capacidad de negocio y puede ser desarrollado, desplegado y escalado de forma independiente."
+        "texto": "Estilo arquitectónico que estructura una aplicación como una colección de servicios pequeños, autónomos y débilmente acoplados. Cada servicio es responsable de una única capacidad de negocio y puede ser desarrollado, desplegado y escalado de forma independiente. Principios clave: Single Responsibility, Autonomía, Descentralización de datos, Diseño para fallos, Automatización de infraestructura."
       },
       {
-        "titulo": "API Gateway",
-        "texto": "Punto de entrada único para todas las solicitudes de clientes hacia los microservicios. Maneja enrutamiento, composición, autenticación, rate limiting y transformación de protocolos. Ejemplos: Kong, AWS API Gateway, Netflix Zuul."
+        "titulo": "API Gateway Pattern",
+        "texto": "Punto de entrada único que actúa como reverse proxy. Responsabilidades: Request routing, API composition, Protocol translation, Rate limiting, Authentication/Authorization, Load balancing, Caching, Request/Response transformation. Implementaciones: Kong (open-source), AWS API Gateway, Netflix Zuul/Spring Cloud Gateway, Traefik, NGINX Plus. Anti-patterns: Gateway monolítico, lógica de negocio en gateway."
       },
       {
         "titulo": "Service Discovery",
-        "texto": "Mecanismo que permite a los servicios encontrarse entre sí dinámicamente sin necesidad de configuración estática. Implementaciones comunes: Consul, Eureka, Kubernetes DNS."
+        "texto": "Mecanismo para localizar servicios dinámicamente. Client-side discovery: cliente consulta registry y balancea (Netflix Eureka + Ribbon). Server-side discovery: load balancer consulta registry (AWS ELB + Route 53). Service Registry: Consul (health checking, KV store), etcd, ZooKeeper. Self-registration vs Third-party registration. DNS-based: Kubernetes CoreDNS, AWS Cloud Map."
       },
       {
         "titulo": "Circuit Breaker Pattern",
-        "texto": "Patrón de resiliencia que previene fallos en cascada. Cuando un servicio falla repetidamente, el circuit breaker abre y redirige las solicitudes a un fallback."
+        "texto": "Patrón de resiliencia con tres estados: Closed (normal), Open (fallback), Half-Open (testing). Métricas: failure threshold, success threshold, timeout. Implementaciones: Resilience4j (Java), Polly (.NET), Hystrix (deprecated). Fallback strategies: cache, default value, alternative service. Combinado con: Retry pattern, Timeout pattern, Bulkhead pattern. Monitoring crucial para ajustar thresholds."
       },
       {
         "titulo": "Event-Driven Architecture",
-        "texto": "Patrón donde los servicios se comunican mediante eventos asíncronos. Promueve bajo acoplamiento y alta escalabilidad. Se implementa con message brokers como Kafka o RabbitMQ."
+        "texto": "Comunicación asíncrona mediante eventos. Patrones: Event Notification (notifica cambio), Event-Carried State Transfer (incluye datos), Event Sourcing (eventos como fuente de verdad). Message Brokers: Apache Kafka (log distribuido, particiones, consumer groups), RabbitMQ (AMQP, exchanges, queues), AWS SNS/SQS. Garantías: at-least-once, at-most-once, exactly-once. Idempotencia es crítica."
+      },
+      {
+        "titulo": "Saga Pattern",
+        "texto": "Gestión de transacciones distribuidas sin 2PC. Choreography: servicios escuchan eventos y reaccionan (descentralizado, complejo de debuggear). Orchestration: coordinador central maneja flujo (centralizado, más fácil de entender). Compensating transactions para rollback. Implementaciones: Temporal, Camunda, AWS Step Functions. Semantic lock, Commutative updates, Pessimistic view, Reread value, Version file, By value."
+      },
+      {
+        "titulo": "CQRS (Command Query Responsibility Segregation)",
+        "texto": "Separa modelo de lectura del de escritura. Commands: modifican estado, no retornan datos. Queries: leen datos, no modifican. Beneficios: optimización independiente, escalado diferenciado, modelos especializados. Eventual consistency entre modelos. Combinado con Event Sourcing: eventos rebuilden read model. Proyecciones: transforman eventos en vistas optimizadas. Complejidad adicional justificada en dominios complejos."
+      },
+      {
+        "titulo": "Database per Service",
+        "texto": "Cada microservicio posee su base de datos. Beneficios: loose coupling, libertad tecnológica (polyglot persistence), escalado independiente. Desafíos: consistencia eventual, queries distribuidas, transacciones distribuidas. Patrones: API Composition (agregar datos via APIs), CQRS (vistas desnormalizadas). Data sovereignty: servicio es dueño exclusivo. Shared database es anti-pattern pero a veces pragmático en migración."
+      },
+      {
+        "titulo": "Service Mesh",
+        "texto": "Capa de infraestructura dedicada para comunicación service-to-service. Data plane: proxies sidecar (Envoy) interceptan tráfico. Control plane: configura proxies (Istio, Linkerd, Consul Connect). Features: mTLS automático, traffic management, observability, circuit breaking, retries, load balancing, canary deployments. Reduce código de infraestructura en servicios. Overhead de latencia y recursos."
+      },
+      {
+        "titulo": "Distributed Tracing",
+        "texto": "Seguimiento de requests a través de múltiples servicios. Trace: viaje completo de request. Span: unidad de trabajo en un servicio. Context propagation: headers (traceparent, b3). Herramientas: Jaeger, Zipkin, AWS X-Ray, Datadog APM. OpenTelemetry: estándar unificado para traces, metrics, logs. Sampling strategies: head-based, tail-based. Correlación con logs y métricas. Esencial para debugging en sistemas distribuidos."
+      },
+      {
+        "titulo": "Strangler Fig Pattern",
+        "texto": "Migración incremental de monolito a microservicios. Fases: 1) Identificar bounded contexts, 2) Crear facade/proxy, 3) Extraer funcionalidad gradualmente, 4) Redirigir tráfico al nuevo servicio, 5) Eliminar código legacy. Anti-corruption layer: traduce entre modelos. Branch by abstraction: abstracciones permiten cambiar implementación. Reduce riesgo vs big bang rewrite. Métricas para validar comportamiento equivalente."
+      },
+      {
+        "titulo": "Bulkhead Pattern",
+        "texto": "Aislamiento de fallos inspirado en compartimentos de barcos. Tipos: Thread pool bulkhead (pool dedicado por dependencia), Semaphore bulkhead (límite de llamadas concurrentes). Previene que un servicio lento consuma todos los recursos. Configuración: max concurrent calls, max wait duration. Combinado con Circuit Breaker y Timeout. Implementaciones: Resilience4j, Hystrix. Sizing requiere análisis de carga y SLAs."
+      },
+      {
+        "titulo": "Sidecar Pattern",
+        "texto": "Componente auxiliar desplegado junto al servicio principal. Responsabilidades: logging, monitoring, configuration, networking, security. Beneficios: separación de concerns, reutilización, independencia de lenguaje. Service Mesh usa sidecars (Envoy). Ambassador pattern: proxy saliente. Adapter pattern: estandariza interfaces. Kubernetes: pod con múltiples containers compartiendo network namespace. Overhead de recursos por sidecar."
+      },
+      {
+        "titulo": "API Versioning Strategies",
+        "texto": "Estrategias: URI versioning (/v1/users), Query parameter (?version=1), Header versioning (Accept-Version), Content negotiation (Accept: application/vnd.api.v1+json). Semantic versioning para APIs: MAJOR.MINOR.PATCH. Breaking changes requieren nueva versión major. Deprecation policy: anunciar, período de gracia, sunset. Consumer-Driven Contract Testing: contratos definen expectativas. Backward compatibility cuando sea posible."
+      },
+      {
+        "titulo": "Observability: Logs, Metrics, Traces",
+        "texto": "Three pillars of observability. Logs: eventos discretos, structured logging (JSON), centralizados (ELK Stack, Loki). Metrics: mediciones numéricas agregables, tipos (counter, gauge, histogram, summary), Prometheus + Grafana. Traces: flujo de requests distribuidos. Correlation IDs unen los tres. SLIs (indicadores), SLOs (objetivos), SLAs (acuerdos). Alerting basado en SLOs. Runbooks para incidentes. Chaos engineering para validar."
       }
     ],
     "preguntas": [
@@ -44,24 +84,104 @@
         "respuesta": 2
       },
       {
-        "pregunta": "¿Cuál es la función principal de un API Gateway?",
+        "pregunta": "En el patrón Saga, ¿qué tipo usa un coordinador central para manejar el flujo?",
         "opciones": [
-          "Almacenar datos en caché",
-          "Punto de entrada único para solicitudes de clientes",
-          "Gestionar bases de datos",
-          "Compilar código fuente"
+          "Choreography",
+          "Orchestration",
+          "Event Sourcing",
+          "CQRS"
         ],
         "respuesta": 1
       },
       {
-        "pregunta": "¿Qué tecnología NO es un message broker?",
+        "pregunta": "¿Qué patrón separa el modelo de lectura del modelo de escritura?",
         "opciones": [
-          "Apache Kafka",
-          "RabbitMQ",
-          "Redis Pub/Sub",
-          "PostgreSQL"
+          "Event Sourcing",
+          "Saga Pattern",
+          "CQRS",
+          "Service Mesh"
         ],
-        "respuesta": 3
+        "respuesta": 2
+      },
+      {
+        "pregunta": "¿Cuál es el principal desafío del patrón Database per Service?",
+        "opciones": [
+          "Mayor costo de licencias",
+          "Consistencia eventual y queries distribuidas",
+          "Menor rendimiento",
+          "Dificultad de backup"
+        ],
+        "respuesta": 1
+      },
+      {
+        "pregunta": "¿Qué componente del Service Mesh intercepta el tráfico entre servicios?",
+        "opciones": [
+          "Control plane",
+          "API Gateway",
+          "Sidecar proxy (Data plane)",
+          "Service Registry"
+        ],
+        "respuesta": 2
+      },
+      {
+        "pregunta": "¿Qué herramienta es estándar unificado para traces, metrics y logs?",
+        "opciones": [
+          "Prometheus",
+          "Jaeger",
+          "OpenTelemetry",
+          "Grafana"
+        ],
+        "respuesta": 2
+      },
+      {
+        "pregunta": "El patrón Strangler Fig se utiliza para:",
+        "opciones": [
+          "Escalar microservicios horizontalmente",
+          "Migrar incrementalmente de monolito a microservicios",
+          "Implementar circuit breakers",
+          "Gestionar transacciones distribuidas"
+        ],
+        "respuesta": 1
+      },
+      {
+        "pregunta": "¿Qué patrón aísla recursos para prevenir que un servicio lento afecte a otros?",
+        "opciones": [
+          "Circuit Breaker",
+          "Bulkhead",
+          "Retry",
+          "Timeout"
+        ],
+        "respuesta": 1
+      },
+      {
+        "pregunta": "En Event-Driven Architecture, ¿qué garantía requiere idempotencia obligatoria?",
+        "opciones": [
+          "At-most-once",
+          "Exactly-once",
+          "At-least-once",
+          "Best-effort"
+        ],
+        "respuesta": 2
+      },
+      {
+        "pregunta": "¿Qué tipo de Service Discovery hace que el cliente consulte el registry directamente?",
+        "opciones": [
+          "Server-side discovery",
+          "DNS-based discovery",
+          "Client-side discovery",
+          "Proxy-based discovery"
+        ],
+        "respuesta": 2
+      },
+      {
+        "pregunta": "¿Cuáles son los tres pilares de la observabilidad?",
+        "opciones": [
+          "Security, Performance, Availability",
+          "Logs, Metrics, Traces",
+          "CI, CD, Monitoring",
+          "Testing, Deployment, Monitoring"
+        ],
+        "respuesta": 1
       }
     ]
   },
@@ -698,6 +818,222 @@
           "Con patrones"
         ],
         "respuesta": 2
+      }
+    ]
+  },
+  "serverless": {
+    "conceptos": [
+      {
+        "titulo": "Arquitectura Serverless",
+        "texto": "Modelo de ejecución donde el proveedor cloud gestiona la infraestructura dinámicamente. Características: sin gestión de servidores, escalado automático, pago por uso (pay-per-execution), stateless por diseño. FaaS (Function as a Service) es el componente principal. BaaS (Backend as a Service) complementa con servicios administrados. Beneficios: reducción de costos operativos, time-to-market rápido, escalabilidad inherente. Trade-offs: cold starts, vendor lock-in, límites de ejecución, debugging complejo."
+      },
+      {
+        "titulo": "AWS Lambda: Fundamentos",
+        "texto": "Servicio FaaS de AWS. Handler function: punto de entrada (event, context). Runtimes soportados: Node.js, Python, Java, Go, .NET, Ruby, Custom Runtime (provided.al2). Límites: 15 min timeout, 10GB memoria, 6MB payload síncrono, 256KB asíncrono. Modelo de facturación: GB-segundo (memoria × tiempo). Free tier: 1M requests/mes, 400,000 GB-segundos. Execution role (IAM) define permisos. Versiones y aliases para deployment management."
+      },
+      {
+        "titulo": "Cold Starts y Optimización",
+        "texto": "Cold start: inicialización cuando no hay instancias warm. Fases: descarga código, inicializa runtime, ejecuta código fuera del handler. Factores: tamaño del deployment package, runtime (Java/C# más lentos), VPC (añade ENI attachment ~10s). Mitigación: Provisioned Concurrency (instancias pre-calentadas, costo adicional), minimizar dependencias, lazy loading, mantener funciones warm con CloudWatch Events. Init phase optimization: mover código reutilizable fuera del handler. SnapStart (Java): reduce cold starts a ~200ms."
+      },
+      {
+        "titulo": "Lambda Layers",
+        "texto": "Paquetes de código compartido entre funciones. Usos: bibliotecas comunes, custom runtimes, dependencias pesadas. Límites: máximo 5 layers por función, 250MB unzipped total. Beneficios: reducir tamaño de deployment, compartir código entre funciones, versionado independiente. Layer se monta en /opt. Structure: /opt/nodejs/node_modules (Node), /opt/python (Python). Public layers: AWS-provided (SDK, Parameters and Secrets Extension). Custom layers via S3 o consola. ARN específico por versión."
+      },
+      {
+        "titulo": "Invocation Models",
+        "texto": "Synchronous: cliente espera respuesta (API Gateway, SDK invoke). Timeout máximo del cliente. Asynchronous: Lambda queue interno, hasta 2 retries automáticos (configurable). Dead Letter Queue (SQS/SNS) para fallos. Destinations: enrutar éxitos/fallos a otros servicios. Event source mapping: Lambda poll de streams (Kinesis, DynamoDB Streams, SQS). Batch processing, bisect on error, parallelization factor. Reserved concurrency: garantiza capacidad, puede throttlear. Error handling diferente por modelo."
+      },
+      {
+        "titulo": "API Gateway: REST vs HTTP APIs",
+        "texto": "REST API: features completos (caching, request validation, WAF integration, usage plans, API keys, private APIs). Mayor costo. HTTP API: 70% más barato, menor latencia, OIDC/OAuth2 nativo, auto-deploy. Menos features. WebSocket API: conexiones persistentes bidireccionales. Stages: dev/staging/prod. Integration types: Lambda proxy (event completo), Lambda custom (transformación), HTTP proxy, Mock, AWS service. Request/Response mapping templates (VTL). Throttling: account-level y per-method. Caching reduce latencia y costos."
+      },
+      {
+        "titulo": "AWS Step Functions",
+        "texto": "Orquestador visual de workflows serverless. State machine usando Amazon States Language (JSON). Task states: invocan Lambda, ECS, actividades. Choice state: branching condicional. Parallel state: ejecución concurrente. Map state: iteración dinámica sobre arrays. Wait state: delays. Error handling: Retry (exponential backoff), Catch (fallback). Standard Workflows: larga duración (hasta 1 año), exactly-once. Express Workflows: alta frecuencia, corta duración (5 min), at-least-once. Integración nativa con 220+ servicios AWS. Visual debugging en consola. Ideal para Saga pattern."
+      },
+      {
+        "titulo": "Amazon EventBridge",
+        "texto": "Event bus serverless para arquitecturas event-driven. Default bus: eventos AWS. Custom bus: eventos propios. Partner bus: SaaS integrations (Datadog, PagerDuty). Event pattern matching: filtros en JSON. Reglas: enrutan eventos a targets (Lambda, SQS, Step Functions, API destinations). Schema Registry: descubre y versiona schemas automáticamente. Archive y Replay: almacena eventos para replay histórico. Event transformation: Input Transformer modifica payload. Scheduler: cron y rate expressions. Content-based filtering reduce invocaciones innecesarias. Retry policy y DLQ por target."
+      },
+      {
+        "titulo": "SQS y SNS en Serverless",
+        "texto": "SQS (Simple Queue Service): colas de mensajes. Standard: alto throughput, at-least-once, posible desorden. FIFO: orden garantizado, exactly-once, 300 TPS (3000 con batching). Lambda polling: batch size configurable, long polling. Visibility timeout: evita procesamiento duplicado. DLQ: mensajes fallidos después de maxReceiveCount. SNS (Simple Notification Service): pub/sub. Topics: múltiples suscriptores (Lambda, SQS, HTTP, email, SMS). Fan-out pattern: SNS → múltiples SQS. Message filtering: suscriptores reciben solo mensajes relevantes. Combinación SQS+SNS para decoupling y buffer."
+      },
+      {
+        "titulo": "DynamoDB para Serverless",
+        "texto": "Base de datos NoSQL optimizada para serverless. On-demand capacity: auto-scaling inmediato, pago por request. Provisioned: capacidad predefinida, auto-scaling configurable. Single-digit millisecond latency. Partition key y optional sort key. Secondary indexes: GSI (global), LSI (local). Streams: captura cambios (INSERT, MODIFY, REMOVE), trigger Lambda. TTL: expiración automática de items. Transactions: ACID para múltiples items. DAX: caching in-memory (microsegundos). PartiQL: SQL-like queries. Global Tables: multi-region replication. Point-in-time recovery. Design patterns: single-table design, adjacency list."
+      },
+      {
+        "titulo": "Lambda@Edge y CloudFront Functions",
+        "texto": "Ejecutar código en edge locations de CloudFront. Lambda@Edge: Node.js/Python, 4 triggers (viewer request/response, origin request/response). Límites: 5s viewer, 30s origin, 128MB viewer, 10GB origin. Usos: A/B testing, authentication, URL rewrites, header manipulation. CloudFront Functions: JavaScript puro, solo viewer triggers, 1ms máximo, 2MB. Mayor escala, menor costo. Usos: cache key normalization, URL redirects, header validation. Deployment: replica automáticamente a todos los edge locations. Latencia ultra-baja para personalización."
+      },
+      {
+        "titulo": "Seguridad en Serverless",
+        "texto": "IAM Execution Role: principio de least privilege, policy específica por función. Resource-based policies: quién puede invocar la función. VPC integration: acceso a recursos privados (RDS, ElastiCache). NAT Gateway necesario para internet. Environment variables: configuración, KMS encryption at rest. Secrets Manager/Parameter Store: credenciales rotables, caching con Lambda extension. Input validation: sanitizar eventos, evitar injection. OWASP Serverless Top 10: injection, broken authentication, sensitive data exposure. WAF con API Gateway. Dependency scanning: npm audit, Snyk. Lambda Inspector para vulnerabilidades."
+      },
+      {
+        "titulo": "Observabilidad en Serverless",
+        "texto": "CloudWatch Logs: logs automáticos de Lambda, Log Insights para queries. CloudWatch Metrics: invocations, duration, errors, throttles, concurrent executions. Custom metrics con EMF (Embedded Metric Format). X-Ray: distributed tracing, service map, trace analysis. Active tracing habilitado en Lambda. Segments y subsegments. Lambda Insights: métricas de sistema (CPU, memory, network). CloudWatch Alarms: alertas en métricas. Dashboard consolidado. Third-party: Datadog, Lumigo, Thundra. Structured logging (JSON) facilita análisis. Correlation IDs para tracing end-to-end. Cost monitoring con Cost Explorer tags."
+      },
+      {
+        "titulo": "Infrastructure as Code para Serverless",
+        "texto": "AWS SAM (Serverless Application Model): extensión de CloudFormation optimizada para serverless. sam init, sam build, sam deploy. Template simplificado: AWS::Serverless::Function. Local testing: sam local invoke, sam local start-api. Serverless Framework: multi-cloud, plugins ecosystem, serverless.yml. CDK (Cloud Development Kit): infraestructura en código real (TypeScript, Python). L2/L3 constructs para patterns comunes. Terraform: provider AWS, modules reutilizables. CI/CD: CodePipeline, GitHub Actions. Blue/green deployments con CodeDeploy integrado en SAM. Traffic shifting gradual (canary, linear). Rollback automático en errores."
+      },
+      {
+        "titulo": "Patrones Arquitectónicos Serverless",
+        "texto": "API Backend: API Gateway + Lambda + DynamoDB. Event Processing: EventBridge/SNS → Lambda → DynamoDB/S3. Stream Processing: Kinesis/DynamoDB Streams → Lambda. Scheduled Tasks: EventBridge Scheduler → Lambda. Fan-out: SNS → múltiples Lambda/SQS. Saga Pattern: Step Functions orquestando Lambda. CQRS: writes a DynamoDB, reads desde DAX o replicas. Strangler Pattern: API Gateway enrutando a Lambda o legacy. Data Lake: S3 + Lambda triggers + Glue + Athena. GraphQL: AppSync con resolvers Lambda/DynamoDB. Real-time: WebSocket API + Lambda + DynamoDB. Cost optimization: right-sizing memory, batching, caching."
+      }
+    ],
+    "preguntas": [
+      {
+        "pregunta": "¿Cuál es el tiempo máximo de ejecución de una función Lambda?",
+        "opciones": [
+          "5 minutos",
+          "10 minutos",
+          "15 minutos",
+          "30 minutos"
+        ],
+        "respuesta": 2
+      },
+      {
+        "pregunta": "¿Qué característica de Lambda mitiga los cold starts manteniendo instancias pre-calentadas?",
+        "opciones": [
+          "Reserved Concurrency",
+          "Provisioned Concurrency",
+          "Lambda Layers",
+          "Lambda@Edge"
+        ],
+        "respuesta": 1
+      },
+      {
+        "pregunta": "¿Cuál es el límite máximo de layers que se pueden adjuntar a una función Lambda?",
+        "opciones": [
+          "3 layers",
+          "5 layers",
+          "10 layers",
+          "Sin límite"
+        ],
+        "respuesta": 1
+      },
+      {
+        "pregunta": "¿Qué tipo de API Gateway es 70% más barato y tiene menor latencia?",
+        "opciones": [
+          "REST API",
+          "HTTP API",
+          "WebSocket API",
+          "Private API"
+        ],
+        "respuesta": 1
+      },
+      {
+        "pregunta": "¿Qué servicio de AWS es ideal para orquestar workflows serverless con manejo visual de estados?",
+        "opciones": [
+          "EventBridge",
+          "Step Functions",
+          "SQS",
+          "Lambda Layers"
+        ],
+        "respuesta": 1
+      },
+      {
+        "pregunta": "¿Qué tipo de Step Functions Workflow soporta duración de hasta 1 año?",
+        "opciones": [
+          "Express Workflows",
+          "Standard Workflows",
+          "Parallel Workflows",
+          "Nested Workflows"
+        ],
+        "respuesta": 1
+      },
+      {
+        "pregunta": "¿Qué patrón arquitectónico usa SNS para enviar un mensaje a múltiples colas SQS simultáneamente?",
+        "opciones": [
+          "Pub/Sub",
+          "Fan-out",
+          "Event Sourcing",
+          "CQRS"
+        ],
+        "respuesta": 1
+      },
+      {
+        "pregunta": "¿Qué feature de DynamoDB captura cambios en la tabla para triggear Lambda?",
+        "opciones": [
+          "DynamoDB DAX",
+          "DynamoDB Streams",
+          "DynamoDB TTL",
+          "DynamoDB Transactions"
+        ],
+        "respuesta": 1
+      },
+      {
+        "pregunta": "¿Cuál es el tiempo máximo de ejecución para CloudFront Functions?",
+        "opciones": [
+          "1 milisegundo",
+          "5 segundos",
+          "30 segundos",
+          "15 minutos"
+        ],
+        "respuesta": 0
+      },
+      {
+        "pregunta": "¿Qué servicio de AWS se recomienda para almacenar credenciales rotables en aplicaciones serverless?",
+        "opciones": [
+          "Environment Variables",
+          "S3 Buckets",
+          "Secrets Manager",
+          "Lambda Layers"
+        ],
+        "respuesta": 2
+      },
+      {
+        "pregunta": "¿Qué herramienta proporciona distributed tracing nativo en AWS serverless?",
+        "opciones": [
+          "CloudWatch Logs",
+          "CloudWatch Metrics",
+          "X-Ray",
+          "CloudTrail"
+        ],
+        "respuesta": 2
+      },
+      {
+        "pregunta": "¿Qué framework de IaC es una extensión de CloudFormation optimizada para serverless?",
+        "opciones": [
+          "Terraform",
+          "CDK",
+          "AWS SAM",
+          "Serverless Framework"
+        ],
+        "respuesta": 2
+      },
+      {
+        "pregunta": "En el modelo de invocación asíncrono de Lambda, ¿cuántos reintentos automáticos se realizan por defecto?",
+        "opciones": [
+          "0 reintentos",
+          "1 reintento",
+          "2 reintentos",
+          "3 reintentos"
+        ],
+        "respuesta": 2
+      },
+      {
+        "pregunta": "¿Qué tipo de cola SQS garantiza orden exacto y exactly-once processing?",
+        "opciones": [
+          "Standard Queue",
+          "FIFO Queue",
+          "Priority Queue",
+          "Delay Queue"
+        ],
+        "respuesta": 1
+      },
+      {
+        "pregunta": "¿Qué capacidad de DynamoDB se recomienda para cargas de trabajo impredecibles en serverless?",
+        "opciones": [
+          "Provisioned Capacity",
+          "On-demand Capacity",
+          "Reserved Capacity",
+          "Burst Capacity"
+        ],
+        "respuesta": 1
       }
     ]
   }

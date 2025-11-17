@@ -23,6 +23,7 @@ export default function Home() {
       graphql: 'GraphQL',
       cicd: 'CI/CD',
       cleancode: 'Clean Code',
+      serverless: 'Serverless AWS',
     }
     return names[topic] || topic
   }

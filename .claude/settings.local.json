@@ -6,7 +6,10 @@
       "Bash(update_knowledge.js)",
       "Bash(mv:*)",
       "Bash(node update_knowledge.cjs:*)",
-      "Bash(npm run dev:*)"
+      "Bash(npm run dev:*)",
+      "Bash(find:*)",
+      "Bash(tree:*)",
+      "Bash(npm run lint)"
     ],
     "deny": [],
     "ask": []

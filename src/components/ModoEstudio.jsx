@@ -57,6 +57,11 @@ export default function ModoEstudio() {
         title: 'Clean Code',
         description: 'Conjunto de principios y prácticas para escribir código legible, mantenible y de alta calidad. Enfatiza nombres significativos, funciones pequeñas, comentarios útiles y estructura clara para facilitar la comprensión y modificación del código.',
         icon: '✨'
+      },
+      serverless: {
+        title: 'Serverless AWS',
+        description: 'Arquitectura donde AWS gestiona la infraestructura dinámicamente. Incluye Lambda (FaaS), API Gateway, Step Functions, EventBridge, DynamoDB y más. Modelo pay-per-execution con escalado automático, ideal para aplicaciones event-driven y microservicios sin gestión de servidores.',
+        icon: '⚡'
       }
     }
     return summaries[topic] || { title: topic, description: 'Tema de estudio', icon: '📚' }
